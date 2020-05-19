@@ -1,5 +1,6 @@
 package com.Danon.chess;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ public class Piece {
     public Rank rank = null;
     public int color = 0;
     public JButton button;
+    private boolean IsEnemy;
+    private boolean IsActivated;
     private ActionListener actionListener = new DefaultActionListener(this);
     
     public static class DefaultActionListener implements ActionListener {
@@ -27,6 +30,7 @@ public class Piece {
         
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(!Main.IsPlayerTurn || Main.PlayerColor_.getValue() != this.piece.color) return;
             Moves.Deselect();
             if(Main.SelectedPiece == piece) {Main.SelectedPiece = null; return;}
             Main.SelectedPiece = piece;
@@ -43,11 +47,19 @@ public class Piece {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(Main.SelectedPiece == null) return;
+            if(Main.SelectedPiece == null || !piece.IsActivated) return;
+            if(this.piece.rank.getCode() == "King"){
+                if(Main.SelectedPiece.color == Main.PlayerColor.Black.getValue())
+                    Main.Winner.setText("BLACK WINS");
+                Main.EndGame();
+            }
             this.piece.Update(Main.SelectedPiece);
-            Main.SelectedPiece.Update(new Piece(Piece.Rank.Empty, 0));
+            Main.SelectedPiece.Update(new Piece(Piece.Rank.Empty, 0, 0));
             Main.SelectedPiece.button.setVisible(false);
+            Main.server.SendMove(Main.FindPiece(Main.SelectedPiece),Main.FindPiece(this.piece));
             Main.SelectedPiece = null;
+            Main.IsPlayerTurn = false;
+            Main.PlayerTurnInfo.setText("ENEMY TURN");
             Moves.Deselect();
         }
     }
@@ -59,7 +71,8 @@ public class Piece {
         this.button.setText(target.button.getText());
         this.color = target.color;
         this.rank = target.rank;
-        if(this.color == 0)
+        this.IsEnemy = target.IsEnemy;
+        if(target.IsEnemy)
             actionListener = new EmptyPieceActionListener(this);
         else
             actionListener = new DefaultActionListener(this);
@@ -67,26 +80,44 @@ public class Piece {
     }
     
     public int Activate(){
-        if(this.color != 0) return 1;
+        if(!IsEnemy) return 1;
+        else if (color != 0){
+            this.button.setBackground(Color.red);
+        }
+        else
+            this.button.setBackground(Color.blue);
         this.button.setVisible(true);
+        IsActivated = true;
         return 0;
     }
     
-    public Piece(Piece.Rank type, int Color){
+    public Piece(Piece.Rank type, int Color, int PlayerColor){
         this.rank = type;
         button = new JButton(this.rank.getCode());
-        if(type != Rank.Empty && Color < 2) {button.setBackground(java.awt.Color.black); 
-                                             button.setForeground(java.awt.Color.white);
-                                             actionListener = new DefaultActionListener(this);
-                                             button.addActionListener(actionListener);
-                                             this.color = 1;}
-        else if (type != Rank.Empty && Color > 5) {button.setBackground(java.awt.Color.white);
+        if(type != Rank.Empty && Color < 2) {button.setBackground(java.awt.Color.black);
+                                                   button.setForeground(java.awt.Color.white);
+                                                   boolean IsEnemy = PlayerColor == -1;
+                                                   if(!IsEnemy)
                                                    actionListener = new DefaultActionListener(this);
+                                                   else
+                                                   actionListener = new EmptyPieceActionListener(this);
                                                    button.addActionListener(actionListener);
+                                                   this.IsEnemy = IsEnemy;
+                                                   this.color = 1;}
+        else if (type != Rank.Empty && Color > 5) {button.setBackground(java.awt.Color.white);
+                                                   button.setForeground(java.awt.Color.black);
+                                                   boolean IsEnemy = PlayerColor == 1;
+                                                   if(!IsEnemy)
+                                                   actionListener = new DefaultActionListener(this);
+                                                   else
+                                                   actionListener = new EmptyPieceActionListener(this);
+                                                   button.addActionListener(actionListener);
+                                                   this.IsEnemy = IsEnemy;
                                                    this.color = -1;}
         else if (type == Rank.Empty) {button.setBackground(java.awt.Color.blue);
                                       actionListener = new EmptyPieceActionListener(this);
-                                      button.addActionListener(actionListener);}
+                                      button.addActionListener(actionListener);
+                                      this.IsEnemy = true;}
         button.setVisible(false);
     }
 }

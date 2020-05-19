@@ -1,5 +1,6 @@
 package com.Danon.chess;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Moves {
@@ -136,8 +137,19 @@ public class Moves {
     
     public static void Deselect(){
         Selected.forEach((piece) -> {
-            if(piece.color == 0)
-            piece.button.setVisible(false);
+            switch (piece.color) {
+                case 0:
+                    piece.button.setVisible(false);
+                    break;
+                case -1:
+                    piece.button.setBackground(Color.white);
+                    break;
+                case 1:
+                    piece.button.setBackground(Color.black);
+                    break;
+                default:
+                    break;
+            }
         });
         Selected.clear();
     }
