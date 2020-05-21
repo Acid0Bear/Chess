@@ -37,17 +37,27 @@ public class Moves {
                 for(int i = 1; i<8;i++){
                     for(int j = -1;j<2;j+=2){
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y) && LockedDirectionsXAxis.x != j && LockedDirectionsXAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 0){
                                 if(j < 0) LockedDirectionsXAxis.x = j;
                                 else LockedDirectionsXAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsXAxis.x = j;
+                                else LockedDirectionsXAxis.y = j; 
                             }
                     if(checkBounds(pos.x) && checkBounds(pos.y + i*j) && LockedDirectionsYAxis.x != j && LockedDirectionsYAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x][pos.y + i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 0){
                                 if(j < 0) LockedDirectionsYAxis.x = j;
+                                else LockedDirectionsYAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsYAxis.x = j;
                                 else LockedDirectionsYAxis.y = j;
                             }
                     }
@@ -61,17 +71,27 @@ public class Moves {
                 for(int i = 1; i<8;i++){
                     for(int j = -1;j<2;j+=2){
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y + i*j) && LockedDirectionsXAxis.x != j && LockedDirectionsXAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 0){
                                 if(j < 0) LockedDirectionsXAxis.x = j;
+                                else LockedDirectionsXAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsXAxis.x = j;
                                 else LockedDirectionsXAxis.y = j;
                             }
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y - i*j) && LockedDirectionsYAxis.x != j && LockedDirectionsYAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 0){
                                 if(j < 0) LockedDirectionsYAxis.x = j;
+                                else LockedDirectionsYAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsYAxis.x = j;
                                 else LockedDirectionsYAxis.y = j;
                             }
                     }
@@ -87,31 +107,51 @@ public class Moves {
                 for(int i = 1; i<8;i++){
                     for(int j = -1;j<2;j+=2){
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y) && LockedDirectionsXAxis.x != j && LockedDirectionsXAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y].Activate() < 0){
                                 if(j < 0) LockedDirectionsXAxis.x = j;
+                                else LockedDirectionsXAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsXAxis.x = j;
                                 else LockedDirectionsXAxis.y = j;
                             }
                     if(checkBounds(pos.x) && checkBounds(pos.y + i*j) && LockedDirectionsYAxis.x != j && LockedDirectionsYAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x][pos.y + i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x][pos.y + i*j].Activate() < 0){
                                 if(j < 0) LockedDirectionsYAxis.x = j;
+                                else LockedDirectionsYAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedDirectionsYAxis.x = j;
                                 else LockedDirectionsYAxis.y = j;
                             }
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y + i*j) && LockedSideWaysXAxis.x != j && LockedSideWaysXAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y + i*j].Activate() < 0){
                                 if(j < 0) LockedSideWaysXAxis.x = j;
+                                else LockedSideWaysXAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedSideWaysXAxis.x = j;
                                 else LockedSideWaysXAxis.y = j;
                             }
                     if(checkBounds(pos.x + i*j) && checkBounds(pos.y - i*j) && LockedSideWaysYAxis.x != j && LockedSideWaysYAxis.y != j)
-                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 1)
+                            if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 1){
                                 Selected.add(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j]);
-                            else{
+                                if(Main.PiecesOnBoard[pos.x + i*j][pos.y - i*j].Activate() < 0){
                                 if(j < 0) LockedSideWaysYAxis.x = j;
+                                else LockedSideWaysYAxis.y = j;
+                                }
+                            }
+                            else{
+                               if(j < 0) LockedSideWaysYAxis.x = j;
                                 else LockedSideWaysYAxis.y = j;
                             }
                     }
@@ -137,6 +177,7 @@ public class Moves {
     
     public static void Deselect(){
         Selected.forEach((piece) -> {
+        piece.IsActivated = false;
             switch (piece.color) {
                 case 0:
                     piece.button.setVisible(false);

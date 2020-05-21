@@ -18,7 +18,7 @@ public class Piece {
     public int color = 0;
     public JButton button;
     private boolean IsEnemy;
-    private boolean IsActivated;
+    public boolean IsActivated;
     private ActionListener actionListener = new DefaultActionListener(this);
     
     public static class DefaultActionListener implements ActionListener {
@@ -83,6 +83,8 @@ public class Piece {
         if(!IsEnemy) return 1;
         else if (color != 0){
             this.button.setBackground(Color.red);
+            IsActivated = true;
+            return -1;
         }
         else
             this.button.setBackground(Color.blue);
